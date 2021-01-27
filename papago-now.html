@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {margin: 0; padding: 0;}
+        body {
+            padding: 25px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        pre {
+            display: inline-block;
+            padding: 15px;
+            background-color: #ddd;
+        }
+        h2 {
+            margin-bottom: 10px;
+        }
+        h4 {
+            margin-bottom: 10px;
+        }
+        p {
+            margin-bottom: 25px;
+        }
+        form {
+            margin-top: 25px;
+        }
+    </style>
+    <title>Papago Now Sample Page</title>
+</head>
+<body>
+    <h2>
+        This is Sample Page of Papago-Now
+    </h2>
+    <p>
+        'Papago-Now' is translator, that translate text through the Naver Papago. (Papago is very nice translator in the  Korea) <br>
+        Also, 'Papago-Now' translate on the Puppeteer. Due to this, 'Papago-Now' is very simple and very slow(...). <br>
+        ... ¯\_(ツ)_/¯
+    </p>
+    <h4>Usage</h4>
+    <pre>
+    document.querySelector('form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        let data = {
+            so: 'ko',
+            ta: 'en',
+            text: e.target.text.value
+        }
+        // fetch('https://papago-now.herokuapp.com/translate', {
+        fetch('/translate', {
+            method: "POST",
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify(data),
+        })
+        .then(res => res.json())
+        .then(json => {
+            document.querySelector('h1').innerText = json.result
+        });
+    })
+    </pre>
+    <form>
+        <textarea id="so-text-area" name="text"></textarea>
+        <input type="submit" value="submit">
+        <h1 class="result"></h1>
+    </form>
+</body>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+<script>
+    document.querySelector('form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        let data = {
+            so: 'ko',
+            ta: 'en',
+            text: e.target.text.value
+        }
+        fetch('https://papago-now.herokuapp.com/translate', {
+        // fetch('/translate', {
+            method: "POST",
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify(data),
+        })
+        .then(res => res.json())
+        .then(json => {
+            document.querySelector('h1').innerText = json.result
+        });
+    })
+</script>
+</html>
